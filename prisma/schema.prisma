@@ -1,14 +1,96 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model users {
+  id          Int           @id @default(autoincrement())
+  name        String
+  email       String        @unique
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  profiles    profiles?
+  educations  educations[]
+  courses     courses[]
+  experiences experiences[]
+  skills      skills[]
+}
+
+model profiles {
+  id         Int      @id @default(autoincrement())
+  user_id    Int      @unique
+  phone      String
+  location   String
+  url        String
+  title      String
+  summary    String   @db.Text
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       users    @relation(fields: [user_id], references: [id])
+}
+
+model educations {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  institution String
+  degree      String
+  start_year  Int
+  end_year    Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  user        users    @relation(fields: [user_id], references: [id])
+}
+
+model courses {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  name        String
+  provider    String
+  url         String
+  start_month Int
+  start_year  Int
+  end_month   Int
+  end_year    Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  user        users    @relation(fields: [user_id], references: [id])
+}
+
+model experiences {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  company     String
+  location    String
+  title       String
+  start_month Int
+  start_year  Int
+  end_month   Int?
+  end_year    Int?
+  description String   @db.Text
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  user        users    @relation(fields: [user_id], references: [id])
+}
+
+model skills {
+  id                  Int              @id @default(autoincrement())
+  user_id             Int
+  skill_categories_id Int
+  skill               String
+  created_at          DateTime         @default(now())
+  updated_at          DateTime         @updatedAt
+  user                users            @relation(fields: [user_id], references: [id])
+  category            skill_categories @relation(fields: [skill_categories_id], references: [id])
+}
+
+model skill_categories {
+  id         Int      @id @default(autoincrement())
+  category   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  skill      skills[]
 }
