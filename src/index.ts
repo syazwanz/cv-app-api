@@ -40,7 +40,7 @@ app.use((_, res: Response) => {
 })
 
 // Start the server
-app
+const server = app
   .listen(port, () => {
     debug(`[server]: Server is running at port ${port}`)
   })
@@ -48,3 +48,5 @@ app
     debug(`Server error: ${error.message}`)
     throw new Error(error.message)
   })
+
+export default server
