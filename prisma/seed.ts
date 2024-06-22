@@ -145,8 +145,7 @@ async function main() {
     },
   })
 
-  console.log({ user })
-  console.log("Database has been seeded")
+  console.log("Database has been seeded!")
 }
 
 main()
