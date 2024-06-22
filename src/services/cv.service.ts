@@ -18,7 +18,7 @@ export const getCvData = async (userId: number) => {
       },
     })
 
-    return { user }
+    return user
   } catch (error) {
     console.error(error)
   }
