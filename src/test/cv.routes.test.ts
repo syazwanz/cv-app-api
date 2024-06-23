@@ -30,6 +30,8 @@ describe("CV API Integration Tests", () => {
     const res = await request(server).get("/api/cv/profile/1")
     expect(res.status).toBe(200)
     expect(res.body).toBeInstanceOf(Object)
+    expect(res.body).toHaveProperty("name", "Mohamad Syazwan B Ahmad Zubir")
+    expect(res.body).toHaveProperty("email", "mohamadsyazwan.az@gmail.com")
     expect(res.body).toHaveProperty("phone", "+60 19 884 0908")
     expect(res.body).toHaveProperty("location", "Selangor, Malaysia")
     expect(res.body).toHaveProperty("url", "https://syazwan.xyz")
@@ -112,7 +114,7 @@ describe("CV API Integration Tests", () => {
     expect(res.body[1]).toHaveProperty("end_year", 2019)
     expect(res.body[1]).toHaveProperty("description")
     expect(res.body[2]).toHaveProperty("company", "Biocon Sdn Bhd")
-    expect(res.body[2]).toHaveProperty("location", "Johor, Malaysia")
+    expect(res.body[2]).toHaveProperty("location", "Johor")
     expect(res.body[2]).toHaveProperty("title", "Senior Associate")
     expect(res.body[2]).toHaveProperty("start_month", 9)
     expect(res.body[2]).toHaveProperty("start_year", 2013)
@@ -120,7 +122,7 @@ describe("CV API Integration Tests", () => {
     expect(res.body[2]).toHaveProperty("end_year", 2016)
     expect(res.body[2]).toHaveProperty("description")
     expect(res.body[3]).toHaveProperty("company", "PETRONAS Fertilizer Kedah")
-    expect(res.body[3]).toHaveProperty("location", "Kedah, Malaysia")
+    expect(res.body[3]).toHaveProperty("location", "Kedah")
     expect(res.body[3]).toHaveProperty("title", "Intern")
     expect(res.body[3]).toHaveProperty("start_month", 6)
     expect(res.body[3]).toHaveProperty("start_year", 2010)
@@ -138,8 +140,6 @@ describe("CV API Integration Tests", () => {
     const frontendSkills = res.body.find(
       (category: any) => category.category === "Frontend"
     )
-
-    console.log(frontendSkills)
 
     expect(frontendSkills).toBeDefined()
     expect(frontendSkills.list).toContain("HTML")
