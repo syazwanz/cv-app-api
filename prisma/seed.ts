@@ -96,7 +96,7 @@ async function main() {
           },
           {
             company: "Biocon Sdn Bhd",
-            location: "Johor, Malaysia",
+            location: "Johor",
             title: "Senior Associate",
             start_month: 9,
             start_year: 2013,
@@ -107,7 +107,7 @@ async function main() {
           },
           {
             company: "PETRONAS Fertilizer Kedah",
-            location: "Kedah, Malaysia",
+            location: "Kedah",
             title: "Intern",
             start_month: 6,
             start_year: 2010,
