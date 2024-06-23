@@ -17,7 +17,7 @@ const debug = debugLib("cv-app:server")
 app.disable("x-powered-by")
 app.use(logger("dev"))
 app.use(helmet())
-app.use(cors({ origin: "your-allowed-origin.com" }))
+app.use(cors({ origin: "*" }))
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
