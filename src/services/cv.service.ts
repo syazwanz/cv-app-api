@@ -26,13 +26,30 @@ export const getCvData = async (userId: number) => {
 
 export const getProfileData = async (userId: number) => {
   try {
-    const profile = await prisma.profiles.findUnique({
+    const profile = await prisma.users.findUnique({
       where: {
-        user_id: userId,
+        id: userId,
+      },
+      include: {
+        profiles: true,
       },
     })
 
-    return profile
+    if (!profile || !profile.profiles) return null
+
+    const { id, name, email, profiles } = profile
+    const { phone, location, url, title, summary } = profiles
+
+    return {
+      id,
+      name,
+      email,
+      phone,
+      location,
+      url,
+      title,
+      summary,
+    }
   } catch (error) {
     console.error(error)
   }
@@ -42,6 +59,17 @@ export const getExperienceData = async (userId: number) => {
   try {
     const experience = await prisma.experiences.findMany({
       where: { user_id: userId },
+      select: {
+        id: true,
+        title: true,
+        company: true,
+        location: true,
+        start_month: true,
+        start_year: true,
+        end_month: true,
+        end_year: true,
+        description: true,
+      },
     })
 
     return experience
@@ -52,11 +80,18 @@ export const getExperienceData = async (userId: number) => {
 
 export const getEducationData = async (userId: number) => {
   try {
-    const experience = await prisma.educations.findMany({
+    const education = await prisma.educations.findMany({
       where: { user_id: userId },
+      select: {
+        id: true,
+        degree: true,
+        institution: true,
+        start_year: true,
+        end_year: true,
+      },
     })
 
-    return experience
+    return education
   } catch (error) {
     console.error(error)
   }
@@ -64,11 +99,21 @@ export const getEducationData = async (userId: number) => {
 
 export const getCoursesData = async (userId: number) => {
   try {
-    const experience = await prisma.courses.findMany({
+    const course = await prisma.courses.findMany({
       where: { user_id: userId },
+      select: {
+        id: true,
+        name: true,
+        provider: true,
+        url: true,
+        start_month: true,
+        start_year: true,
+        end_month: true,
+        end_year: true,
+      },
     })
 
-    return experience
+    return course
   } catch (error) {
     console.error(error)
   }
