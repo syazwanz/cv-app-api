@@ -6,9 +6,12 @@
     "dev": "dotenv -e .env.dev -- nodemon",
     "build": "tsc",
     "start": "dotenv -e .env.prod -- node dist/index.js",
-    "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down",
-    "test": "dotenv -e .env.test -- npx prisma migrate deploy && prisma db seed && jest --runInBand --detectOpenHandles"
+    "test": "jest --runInBand --detectOpenHandles",
+    "docker:dev": "docker-compose up -d db_dev",
+    "migrate:dev": "dotenv -e .env.dev -- npx prisma migrate deploy && dotenv -e .env.dev -- prisma db seed",
+    "docker:test": "docker-compose up -d db_test",
+    "migrate:test": "dotenv -e .env.test -- npx prisma migrate deploy && dotenv -e .env.test -- prisma db seed",
+    "docker:down":"docker-compose down"
   },
   "dependencies": {
     "@prisma/client": "^5.15.1",
@@ -38,6 +41,6 @@
     "typescript": "^5.4.5"
   },
   "prisma": {
-    "seed": "dotenv -e .env.test -- ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts"
   }
 }
